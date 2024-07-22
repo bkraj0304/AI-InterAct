@@ -9,6 +9,7 @@ import rocket from './assets/rocket.svg';
 import sendBtn from './assets/send.svg';
 import userIcon1 from './assets/user_icon1.png';
 import  {sendMsgToOpenAI } from './openai';
+import {gemini_model_call} from './gemini';
 import chatbot from './assets/chatbot.png';
 
 
@@ -24,6 +25,7 @@ function App() {
 ]);
 
 useEffect(()=>{
+  console.log("Raj",messages);
   msgEnd.current.scrollIntoView();
 },[messages]);
 
@@ -31,20 +33,28 @@ useEffect(()=>{
 
   const handlesend = async () => {
     try {
-      const text1=input;
+      const user_input=input;
       setInput('');
       setMessages([
         ...messages,
-        {text:text1 ,isBot:false}
+        {text:user_input ,isBot:false}
       ]);
+
       
-        const res = await sendMsgToOpenAI(text1);
+      //  gemini_model_call();
+        // const res = await sendMsgToOpenAI(text1);
+        const res = await gemini_model_call(user_input);
+        // data  = {
+        //         user:user_input,
+        //         bot:res
+        //         }
 
         setMessages([
           ...messages,
-          {text:text1, isBot:false},
+          {text:user_input, isBot:false},
           {text:res, isBot:true}
         ]);
+        console.log(setMessages);
         
     } catch (error) {
         console.error('Error:', error);
@@ -62,24 +72,25 @@ const handleEnter=async (e)=>{
     <div className="App">
       <div className="sideBar">
         <div className="upperSide">
-          <div className="upperSideTop"><img src={gptLogo} alt="gptlogo" className="logo" /><span className="brand">My Chatbot</span></div>
+          <div className="upperSideTop"><img src={gptLogo} alt="gptlogo" className="logo" /><span className="brand">AI INTERACT</span></div>
 
           <button className="midBtn btn btn-primary" onClick={()=>{window.location.reload()}}><img src={addBtn} alt="new Chat" className="addBtn" />New Chat</button>
 
-          <div className="upperSideBottom">
+          {/* <div className="upperSideBottom">
             <button className="query"><img src={msgIcon} alt="Query" className="logo" />What is Programming ?</button>
 
             <button className="query"><img src={msgIcon} alt="Query" className="logo" />How to use an API ?</button>
-          </div>
+          </div> */}
 
 
 
 
         </div>
         <div className="lowerside">
-          <div className="listItems"><img src={home} alt="home" className="listItemsImage" />Home</div>
+          {/* <div className="listItems"><img src={home} alt="home" className="listItemsImage" />Home</div>
           <div className="listItems"><img src={saved} alt="bookmark" className="listItemsImage" />Saved</div>
-          <div className="listItems"><img src={rocket} alt="rocket" className="listItemsImage" />Upgrade</div>
+          <div className="listItems"><img src={rocket} alt="rocket" className="listItemsImage" />Upgrade</div> */}
+          <button type="button" className="btn btn-success listItems">Save</button>
 
         </div>
 
@@ -98,13 +109,21 @@ const handleEnter=async (e)=>{
 
         </div>
         <div className="chatFooter">
-          <div className="inp">
-            <input type="text" placeholder='Send a message' value={input} onKeyDown={handleEnter} onChange={(e)=>{setInput(e.target.value)}}  /><button className='send' onClick={handlesend}><img src={sendBtn} alt="send" /></button>
-          </div>
-
-          <p>ChatGPT may produce incorrect result</p>
-
-        </div>
+    <div className="inp">
+        <input 
+            type="text" 
+            placeholder='Send a message' 
+            value={input} 
+            onKeyDown={handleEnter} 
+            onChange={(e)=>{setInput(e.target.value)}}  
+        />
+        <button className='send' onClick={handlesend}>
+            <img src={sendBtn} alt="send" />
+        </button>
+    </div>
+    
+    <p>ChatGPT may produce incorrect result</p>
+</div>
 
       </div>
     </div>

@@ -1,14 +1,15 @@
-
 const  OpenAIApi = require('openai');
-// console.log(OpenAIApi);
-const apiKey = process.env.REACT_APP_NEWS_API;
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+console.log("openai",apiKey);
 
 const openai = new OpenAIApi({ apiKey, dangerouslyAllowBrowser: true });
+// secret_key = ""
 
 // Define and export an async function to send a message to OpenAI
 async function sendMsgToOpenAI(message) {
     console.log(message);
     try {
+        // prompt = "Consider yourself to be a code genretater. Provide correct code for the following instructions: "+message;
         // Use the OpenAIApi instance to create a completion
         const chatCompletion = await openai.chat.completions.create({
             messages: [{ role: "user", content: message }],
