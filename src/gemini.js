@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Access your API key as an environment variable (see "Set up your API key" above)
 const api_key = process.env.REACT_APP_GEMINI_API_KEY;
-const apikey ="AIzaSyAYhSjvYEJhhSvudIDIXEAbAR";
+const apikey ="AIzaSyA7_meqqj7kc2Si0DDDo-X4q3xOd0xKM8A";
 
 const genAI = new GoogleGenerativeAI(apikey);
 console.log(genAI);
